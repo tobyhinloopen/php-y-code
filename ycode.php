@@ -22,8 +22,7 @@ foreach(array(
 	"/</" => "&lt;",
 	"/>/" => "&gt;",
 	"/&/" => "&amp;",
-	"/(?:\\r\\n|\\r|\\n)/" => function($_)
-	{ return "<br>"; }
+	"/(?:\\r\\n|\\r|\\n)/" => "<br>"
 ) as $pattern => $callback)
 {
 	$ycode_global_string_scanner->register_preg_replacement($pattern, $callback);
