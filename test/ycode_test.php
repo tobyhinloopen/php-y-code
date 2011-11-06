@@ -69,4 +69,9 @@ frseql("should be able to handle colors in a quote", function()
 { return get_stripped_parser_result("~~~~\r\nx\r\n^1red\r\n~~~~black");
 }, '<blockquote><span class="User Name">x</span><br /><span class="color color1">red</span></blockquote>black');
 
+frseql("should be able to handle colors in a rauwkost", function()
+{ return get_stripped_parser_result("[rauw]^1red[/rauw]black");
+}, '<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText"><span class="color color1">red</span><span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>black');
+
+
 ?>

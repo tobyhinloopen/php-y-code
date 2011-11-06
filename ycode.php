@@ -16,7 +16,7 @@ foreach(array(
 	"/>/" => "&gt;",
 	"/&/" => "&amp;",
 	"/\\[rauw\\](.*?)\\[\\/rauw\\]" => function($_, $content)
-	{ return sprintf('<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText">%s<span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>', $GLOBALS["ycode_nested_string_scanner"]->replace($content)); },
+	{ return sprintf('<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText">%s<span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>', $GLOBALS["ycode_global_string_scanner"]->replace($content)); },
 	"/(?:\\r\\n|\\r|\\n)/" => "<br />",
 	"/(https?:\\/\\/|www\\d{0,3}\\.)([-\\w\\.]+)+(:\\d+)?(\\/([\\w\\/_\\.]*(\\?\\S+)?)?)?/" => function($url)
 	{
