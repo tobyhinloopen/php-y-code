@@ -7,6 +7,11 @@ This PHP-based Y-code to HTML converter is based on a PHP port of my
 
 I'm not a PHP developer. The code therefore contains some nasty hacks.
 
+Requirements
+------------
+These scripts will not work in PHP 5.2 or below and are only tested in
+PHP 5.3.6 and PHP 5.3.8, but should work in older versions of 5.3.
+
 Installation
 ------------
 Download and copy `regexp_traits.php`, `util.php`, `will_scan_string.php` and
@@ -35,6 +40,8 @@ Also, for coloring to work, you need to add something like this to your CSS:
 .color6 { color: purple; }
 .color7 { color: #ffffff; }
 ```
+
+Run `test/_all.php` to test if the parser is working properly.
 
 Y-Code Syntax
 -------------
