@@ -53,7 +53,10 @@ function function_result_should_eql($test_name, $function_name, $expected_result
 	should_eql($test_name, $result, $expected_result);
 }
 
-function_result_should_eql("testing function_result_should_eql", function()
+function frseql($t, $f, $e)
+{ function_result_should_eql($t, $f, $e); }
+
+frseql("testing function_result_should_eql", function()
 {
 	return "foo";
 }, "foo");
