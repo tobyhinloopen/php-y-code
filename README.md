@@ -16,14 +16,15 @@ Include `ycode.php` in your PHP script to use the `y2html` function to convert
 your Y-code string to HTML.
 
 Example, assuming you stored the PHP files in the folder `ycode/`:
-```
-require_once("ycode/ycode.php");
 
+```php
+require_once("ycode/ycode.php");
 print y2html("^1Hello ^4world!");
 ```
 
 Also, for coloring to work, you need to add something like this to your CSS:
-```
+
+```css
 .color, .color0, .color8, .color9 { color: inherit; }
 .color0 { color: inherit; }
 .color1 { color: red; }
