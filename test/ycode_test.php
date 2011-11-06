@@ -23,7 +23,7 @@ frseql("should replace html entities", function()
 
 frseql("should replace new-lines to <br>'s", function()
 { return get_stripped_parser_result("a\r\nb\rc\nd");
-}, "a<br>b<br>c<br>d");
+}, "a<br />b<br />c<br />d");
 
 frseql("should enable bold words", function()
 { return get_stripped_parser_result("_bold!_");
@@ -39,6 +39,22 @@ frseql("should be able to handle nested patterns", function()
 
 frseql("should be able to link to user profiles", function()
 { return get_stripped_parser_result("check profile of\r\n//tobyhinloopen\r\n\r\nHe's awesome!");
-}, 'check profile of<br><a href="user_by_username.php?username=tobyhinloopen">tobyhinloopen</a><br><br>He\'s awesome!');
+}, 'check profile of<br /><a href="user_by_username.php?username=tobyhinloopen" class="auto-embedded">tobyhinloopen</a><br /><br />He\'s awesome!');
+
+frseql("should convert a url to a link", function()
+{ return get_stripped_parser_result("www.google.com http://www.google.com/");
+}, '<a href="http://www.google.com" rel="nofollow" class="auto-embedded">[www.google.com]</a> <a href="http://www.google.com/" rel="nofollow" class="auto-embedded">[www.google.com]</a>');
+
+frseql("should embed an image", function()
+{ return get_stripped_parser_result("http://i.imgur.com/H5H6f.png");
+}, '<img src="http://i.imgur.com/H5H6f.png" class="auto-embedded" />');
+
+frseql("should embed a youtube video", function()
+{ return get_stripped_parser_result("http://www.youtube.com/watch?v=-kHzZZvsdOE");
+}, '<embed src="http://www.youtube.com/v/-kHzZZvsdOE&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="583" height="354" class="auto-embedded" />');
+
+frseql("should parse a quote", function()
+{ return get_stripped_parser_result("~~~~\r\nRubberEendje\r\nHoi!\r\n~~~~");
+}, '<blockquote><span class="User Name">RubberEendje</span><span class="color color0">Hoi!</span></blockquote>');
 
 ?>
