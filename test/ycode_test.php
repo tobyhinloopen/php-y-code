@@ -6,7 +6,11 @@ require_once "ycode.php";
 function get_stripped_parser_result( $string )
 {
 	$result = parse_ycode_formatted_string_to_html( $string );
-	return substr($result, strlen('<span class="color color0">'), -strlen("</span>"));
+	if(substr($result, 0, strlen('<span class="color color0">')) == '<span class="color color0">'
+	&& substr($result, -strlen("</span>")) == "</span>")
+		return substr($result, strlen('<span class="color color0">'), -strlen("</span>"));
+	else
+		return $result;
 }
 
 frseql("get_stripped_parser_result", function()
@@ -55,6 +59,14 @@ frseql("should embed a youtube video", function()
 
 frseql("should parse a quote", function()
 { return get_stripped_parser_result("~~~~\r\nRubberEendje\r\nHoi!\r\n~~~~");
-}, '<blockquote><span class="User Name">RubberEendje</span><span class="color color0">Hoi!</span></blockquote>');
+}, '<blockquote><span class="User Name">RubberEendje</span><br /><span class="color color0">Hoi!</span></blockquote>');
+
+frseql("should match a color at the start of the string", function()
+{ return parse_ycode_formatted_string_to_html("^1red");
+}, '<span class="color color1">red</span>');
+
+frseql("should be able to handle colors in a quote", function()
+{ return get_stripped_parser_result("~~~~\r\nx\r\n^1red\r\n~~~~black");
+}, '<blockquote><span class="User Name">x</span><br /><span class="color color1">red</span></blockquote>black');
 
 ?>

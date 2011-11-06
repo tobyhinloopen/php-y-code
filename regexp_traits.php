@@ -9,9 +9,9 @@ function get_capture_groups( $regular_expression )
 	$c = 1;
 	foreach($matches as $match)
 	{
-		if($match[1] != "")
+		if(isset($match[1]) && $match[1] != "")
 			$name = $match[1];
-		elseif($match[2] != "")
+		elseif(isset($match[2]) && $match[2] != "")
 			$name = $match[2];
 		else
 			$name = $c++;
