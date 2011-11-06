@@ -18,7 +18,7 @@ foreach(array(
 	"/([\\s\\S]*?)\\[rauw\\]\\s*([\\s\\S]*?)\\s*\\[\\/rauw\\]([\\s\\S]*?)" => function($_, $prefix, $content, $postfix)
 	{ return sprintf('%s<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText">%s<span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>%s', $GLOBALS["ycode_global_string_scanner"]->replace($prefix), $GLOBALS["ycode_global_string_scanner"]->replace($content), $GLOBALS["ycode_global_string_scanner"]->replace($postfix)); },
 	"/(?:\\r\\n|\\r|\\n)/" => "<br />",
-	"/(https?:\\/\\/|www\\d{0,3}\\.)([-\\w\\.]+)+(:\\d+)?(\\/([\\w\\/_\\.]*(\\?\\S+)?)?)?/" => function($url)
+	"/(https?:\\/\\/|www\\d{0,3}\\.)([-\\w_\\.]+)+(:\\d+)?(\\/([\\w\\/\\._-]*(\\?\\S+)?)?)?/" => function($url)
 	{
 		if(substr($url, 0, 3) == "www") $url = "http://".$url;
 		$url_data = parse_url($url);
