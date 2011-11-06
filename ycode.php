@@ -13,7 +13,7 @@ $ycode_global_string_scanner->register_preg_replacement("/(?:\\A|\\^(\\d))([\\s\
 
 foreach(array(
 	"/_(.+)_/" => function($_, $content)
-	{ var_dump(utf8_html_entities($content)); return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
+	{ return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
 	"/^\\/\\/\\s*(.+)/" => function($_, $username)
 	{ return sprintf('<a href="user_by_username.php?username=%s">%s</a>', utf8_html_entities(rawurlencode($username)), utf8_html_entities($username)); },
 	"/~~~~\\r\\n(.+?)\\r\\n([\\s\\S]*?)\\r\\n~~~~/" => function($_, $quotee, $content)
