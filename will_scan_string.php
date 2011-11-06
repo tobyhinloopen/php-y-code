@@ -8,7 +8,13 @@ class WillScanString
 	private $replacements = array();
 	private $replacement_pattern = NULL;
 
-	public function register_preg_replacement_callback( $pattern, $callback )
+	public function register_replacement( $pattern, $replacement )
+	{
+		$pattern = preg_quote($pattern, "/");
+		$this->register_preg_replacement( $pattern, $replacement );
+	}
+
+	public function register_preg_replacement( $pattern, $callback )
 	{
 		$last_replacement = array_peek($this->replacements);
 		if($last_replacement)
@@ -56,7 +62,10 @@ class WillScanString
 
 	public function execute_replacement_with_match( $replacement, $match )
 	{
-		return call_user_func_array( $replacement, $match );
+		if(is_callable($replacement))
+			return call_user_func_array( $replacement, $match );
+		else
+			return $replacement;
 	}
 
 	public function find_replacement_by_index( $index )
