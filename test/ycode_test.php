@@ -33,4 +33,12 @@ frseql("should enable color switching", function()
 { return parse_ycode_formatted_string_to_html("black ^1 red ^0 black");
 }, '<span class="color color0">black </span><span class="color color1"> red </span><span class="color color0"> black</span>');
 
+frseql("should be able to handle nested patterns", function()
+{ return get_stripped_parser_result("black ^1 _bold & red_");
+}, 'black </span><span class="color color1"> <strong>bold &amp; red</strong>');
+
+frseql("should be able to link to user profiles", function()
+{ return get_stripped_parser_result("check profile of\r\n//tobyhinloopen\r\n\r\nHe's awesome!");
+}, 'check profile of<br><a href="user_by_username.php?username=tobyhinloopen">tobyhinloopen</a><br><br>He\'s awesome!');
+
 ?>
