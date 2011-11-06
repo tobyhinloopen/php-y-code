@@ -14,8 +14,8 @@ $ycode_global_string_scanner->register_preg_replacement("/(?:\\A|\\^(\\d))([\\s\
 foreach(array(
 	"/_(.+)_/" => function($_, $content)
 	{ return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
-	"/^\\/\\/\\s*(.+)/" => function($_, $username)
-	{ return sprintf('<a href="user_by_username.php?username=%s">%s</a>', utf8_html_entities(rawurlencode($username)), utf8_html_entities($username)); },
+	"/(?<=\\A|\\r\\n|\\r|\\n)\\/\\/\\s*(.+)/" => function($_, $username)
+	{ return sprintf('<a href="user_by_username.php?username=%s">%s</a>', utf8_html_entities(rawurlencode(trim($username))), utf8_html_entities(trim($username))); },
 	"/~~~~\\r\\n(.+?)\\r\\n([\\s\\S]*?)\\r\\n~~~~/" => function($_, $quotee, $content)
 	{ global $ycode_global_string_scanner;
 	  return sprintf('<blockquote><span class="User Name">%s</span>%s</blockquote>', utf8_html_entities($quotee), $ycode_global_string_scanner->replace($content)); },
