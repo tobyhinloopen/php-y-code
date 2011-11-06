@@ -42,8 +42,9 @@ $GLOBALS["ycode_global_string_scanner"]->register_preg_replacement("/(?:\\^(\\d)
 { return sprintf('<span class="color color%d">%s</span>', intval($color), $GLOBALS["ycode_nested_string_scanner"]->replace($content)); });
 
 function parse_ycode_formatted_string_to_html( $string )
-{
-	return $GLOBALS["ycode_global_string_scanner"]->replace($string);
-}
+{ return $GLOBALS["ycode_global_string_scanner"]->replace($string); }
+
+function y2html( $string )
+{ return parse_ycode_formatted_string_to_html($string); }
 
 ?>
