@@ -50,7 +50,7 @@ class WillScanString
 			}
 		}
 		$replacement = $this->find_replacement_by_index($index);
-		$match = array_slice($match, $index, count(get_capture_groups($replacement[0])));
+		$match = array_slice($match, $index, count(get_capture_groups($replacement[0]))+1);
 		return array($match, $replacement[1]);
 	}
 
@@ -76,7 +76,7 @@ class WillScanString
 
 	public function reconstruct_replacement_pattern()
 	{
-		$additional_offset = 1;
+		$GLOBALS["__will_scan_string_additional_offset"] = 1;
 		$sub_patterns = array();
 		foreach($this->replacements as $r)
 		{
@@ -84,8 +84,11 @@ class WillScanString
 			$cpsc = count(get_capture_groups($p));
 			$p = preg_replace("/(?:\\A\\/|\\/[a-z]*\\Z)/", "", $p);
 			$p = preg_replace_callback("/(?<!\\\\\\\\)(?<=\\\\)(\\d+)/", function($m)
-			{ return (string)(intval($m[1]) + $additional_offset); }, $p);
-			$additional_offset += 1 + $cpsc;
+			{
+				global $__will_scan_string_additional_offset;
+				return (string)(intval($m[1]) + $__will_scan_string_additional_offset);
+			}, $p);
+			$__will_scan_string_additional_offset += 1 + $cpsc;
 			array_push($sub_patterns, "(".$p.")");
 		}
 		return "/(?:".implode("|", $sub_patterns).")/";
