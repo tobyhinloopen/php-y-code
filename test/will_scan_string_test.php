@@ -49,7 +49,14 @@ frseql("should be able to match newlines", function()
 {
 	$ss = new WillScanString();
 	$ss->register_replacement("\r\n", "<br>");
-	return $ss->replace("<br>");
+	return $ss->replace("\r\n");
+}, "<br>");
+
+frseql("should be able to match newlines using a regexp", function()
+{
+	$ss = new WillScanString();
+	$ss->register_preg_replacement("/\\r\\n/", "<br>");
+	return $ss->replace("\r\n");
 }, "<br>");
 
 ?>
