@@ -22,9 +22,13 @@ foreach(array(
 	{
 		if(substr($url, 0, 3) == "www") $url = "http://".$url;
 		$url_data = parse_url($url);
-		if((isset($url_data["query"]) && preg_match("/youtube\.[a-z]/", $url_data["host"]) && preg_match("/v=([a-z0-9_-]{11})/i", $url_data["query"], $match)))
+		if(isset($url_data["query"]) && preg_match("/youtube\.[a-z]/", $url_data["host"]) && preg_match("/v=([a-z0-9_-]{11})/i", $url_data["query"], $match))
 			return sprintf('<embed src="http://www.youtube.com/v/%s&fs=1" type="application/x-shockwave-flash" allowfullscreen="true" width="583" height="354" class="auto-embedded" />', utf8_html_entities($match[1]));
-		if(preg_match("/\\.(?:jpe?g|gif|png)/i", $url_data["path"]))
+		elseif(isset($url_data["query"]) && preg_match("liveleak.com", $url_data["host"]) && preg_match("/i=([^&]+)/", $url_data["query"], $match))
+			return sprintf('<embed src="http://www.liveleak.com/e/%s" type="application/x-shockwave-flash" wmode="transparent" width="450" height="370" class="auto-embedded" />', utf8_html_entities($match[1]));
+		elseif(isset($url_data["query"]) && preg_match("dailymotion.com", $url_data["host"]) && preg_match("/video\\/([^\\/]+)/i", $url_data["query"], $match))
+			return sprintf('<embed src="http://www.dailymotion.com/swf/%s" type="application/x-shockwave-flash" width="448" height="357" allowfullscreen="true" allowscriptaccess="always" class="auto-embedded" />', utf8_html_entities($match[1]));
+		elseif(preg_match("/\\.(?:jpe?g|gif|png)/i", $url_data["path"]))
 			return sprintf('<img src="%s" class="auto-embedded" />', utf8_html_entities($url));
 		else
 		{
