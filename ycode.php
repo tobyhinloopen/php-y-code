@@ -10,13 +10,13 @@ foreach(array(
 	{ return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
 	"/(?<=\\A|\\r\\n|\\r|\\n)\\/\\/\\s*(.+)/" => function($_, $username)
 	{ return sprintf('<a href="user_by_username.php?username=%s" class="auto-embedded">%s</a>', utf8_html_entities(rawurlencode(trim($username))), utf8_html_entities(trim($username))); },
-	"/~~~~(?:\\r\\n|\\r|\\n)(.+?)(?:\\r\\n|\\r|\\n)([\\s\\S]*?)(?:\\r\\n|\\r|\\n)~~~~/" => function($_, $quotee, $content)
-	{ return sprintf('<blockquote><span class="User Name">%s</span><br />%s</blockquote>', utf8_html_entities($quotee), $GLOBALS["ycode_global_string_scanner"]->replace($content)); },
+	"/([\\s\\S]*?)~~~~(?:\\r\\n|\\r|\\n)\\s*(.+?)\\s*(?:\\r\\n|\\r|\\n)([\\s\\S]*?)(?:\\r\\n|\\r|\\n)~~~~([\\s\\S]*?)/" => function($_, $prefix, $quotee, $content, $postfix)
+	{ return sprintf('%s<blockquote><span class="User Name">%s</span><br />%s</blockquote>%s', $GLOBALS["ycode_global_string_scanner"]->replace($prefix), utf8_html_entities($quotee), $GLOBALS["ycode_global_string_scanner"]->replace($content), $GLOBALS["ycode_global_string_scanner"]->replace($postfix)); },
 	"/</" => "&lt;",
 	"/>/" => "&gt;",
 	"/&/" => "&amp;",
-	"/\\[rauw\\](.*?)\\[\\/rauw\\]" => function($_, $content)
-	{ return sprintf('<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText">%s<span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>', $GLOBALS["ycode_global_string_scanner"]->replace($content)); },
+	"/([\\s\\S]*?)\\[rauw\\]\\s*([\\s\\S]*?)\\s*\\[\\/rauw\\]([\\s\\S]*?)" => function($_, $prefix, $content, $postfix)
+	{ return sprintf('%s<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText">%s<span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>%s', $GLOBALS["ycode_global_string_scanner"]->replace($prefix), $GLOBALS["ycode_global_string_scanner"]->replace($content), $GLOBALS["ycode_global_string_scanner"]->replace($postfix)); },
 	"/(?:\\r\\n|\\r|\\n)/" => "<br />",
 	"/(https?:\\/\\/|www\\d{0,3}\\.)([-\\w\\.]+)+(:\\d+)?(\\/([\\w\\/_\\.]*(\\?\\S+)?)?)?/" => function($url)
 	{
@@ -38,7 +38,7 @@ foreach(array(
 	$GLOBALS["ycode_nested_string_scanner"]->register_preg_replacement($pattern, $callback);
 }
 
-$GLOBALS["ycode_global_string_scanner"]->register_preg_replacement("/(?:\\^(\\d)|\\A)([\\s\\S]*?)(?=\\Z|\\^\\d)/", function($_, $color, $content)
+$GLOBALS["ycode_global_string_scanner"]->register_preg_replacement("/(?:\\^(\\d)|\\A)([\\s\\S]+?)(?=\\Z|\\^\\d)/", function($_, $color, $content)
 { return sprintf('<span class="color color%d">%s</span>', intval($color), $GLOBALS["ycode_nested_string_scanner"]->replace($content)); });
 
 function parse_ycode_formatted_string_to_html( $string )
