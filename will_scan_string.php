@@ -20,7 +20,7 @@ class WillScanString
 		if($last_replacement)
 		{
 			$previous_index = $last_replacement[2];
-			$pattern_capture_group_count = count(get_capture_groups($pattern));
+			$pattern_capture_group_count = count(get_capture_groups($last_replacement[0]));
 			$index = $previous_index + $pattern_capture_group_count + 1;
 		}
 		else
@@ -32,7 +32,6 @@ class WillScanString
 
 	public function replace( $string )
 	{
-		// very, very dirty hack because PHP sucks.
 		$GLOBALS["__will_scan_string_instance"] = $this;
 		$result = preg_replace_callback($this->get_replacement_pattern(), function($match)
 		{
