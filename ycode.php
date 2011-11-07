@@ -5,6 +5,8 @@ require_once dirname(__FILE__)."/will_scan_string.php";
 $GLOBALS["ycode_global_string_scanner"] = new WillScanString();
 $GLOBALS["ycode_nested_string_scanner"] = new WillScanString();
 
+$URL_PATTERN = "((https?:\\/\\/|www\\d{0,3}\\.)([-\\w_\\.]+)+(:\\d+)?(\\/([%\\w\\/\\._-]*(\\?\\S+)?)?)?)";
+
 foreach(array(
 	"/_(.+)_/" => function($_, $content)
 	{ return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
@@ -18,7 +20,14 @@ foreach(array(
 	"/([\\s\\S]*?)\\[rauw\\]\\s*([\\s\\S]*?)\\s*\\[\\/rauw\\]([\\s\\S]*?)" => function($_, $prefix, $content, $postfix)
 	{ return sprintf('%s<div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText">%s<span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>%s', $GLOBALS["ycode_global_string_scanner"]->replace($prefix), $GLOBALS["ycode_global_string_scanner"]->replace($content), $GLOBALS["ycode_global_string_scanner"]->replace($postfix)); },
 	"/(?:\\r\\n|\\r|\\n)/" => "<br />",
-	"/(https?:\\/\\/|www\\d{0,3}\\.)([-\\w_\\.]+)+(:\\d+)?(\\/([\\w\\/\\._-]*(\\?\\S+)?)?)?/" => function($url)
+	"/!$URL_PATTERN/" => function($_, $url)
+	{
+		if(substr($url, 0, 3) == "www") $url = "http://".$url;
+		$url_data = parse_url($url);
+		$text = sprintf("[%s]", $url_data["host"]);
+		return sprintf('<a href="%s" rel="nofollow" class="auto-embedded">%s</a>', utf8_html_entities($url), utf8_html_entities($text));
+	},
+	"/$URL_PATTERN/" => function($url)
 	{
 		if(substr($url, 0, 3) == "www") $url = "http://".$url;
 		$url_data = parse_url($url);
