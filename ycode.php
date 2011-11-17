@@ -5,7 +5,7 @@ require_once dirname(__FILE__)."/will_scan_string.php";
 $GLOBALS["ycode_global_string_scanner"] = new WillScanString();
 $GLOBALS["ycode_nested_string_scanner"] = new WillScanString();
 
-$URL_PATTERN = "((https?:\\/\\/|www\\d{0,3}\\.)([-\\w_\\.]+)+(:\\d+)?(\\/([%\\w\\/\\._-]*(\\?\\S+)?)?)?)";
+$URL_PATTERN = "((https?:\\/\\/|www\\d{0,3}\\.)([-\\w_\\.]+)+(:\\d+)?(\\/([%\\w\\/\\._-]*(\\?\\S+)?(\\#\\S+)?)?)?)";
 
 foreach(array(
 	"/_(.+)_/" => function($_, $content)
