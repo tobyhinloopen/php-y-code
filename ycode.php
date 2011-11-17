@@ -8,7 +8,7 @@ $GLOBALS["ycode_nested_string_scanner"] = new WillScanString();
 $URL_PATTERN = "((?:www\\.|https?:\\/\\/)[^\\/]+\\.[a-z0-9]+(\\/\\S*)?)";
 
 foreach(array(
-	"/_(.+)_/" => function($_, $content)
+	"/_(.+?)_/" => function($_, $content)
 	{ return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
 	"/(?<=\\A|\\r\\n|\\r|\\n)\\/\\/\\s*(.+)/" => function($_, $username)
 	{ return sprintf('<a href="user_by_username.php?username=%s" class="auto-embedded">%s</a>', utf8_html_entities(rawurlencode(trim($username))), utf8_html_entities(trim($username))); },
