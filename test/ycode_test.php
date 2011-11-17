@@ -49,6 +49,10 @@ frseql("should convert a url to a link", function()
 { return get_stripped_parser_result("www.google.com http://www.google.com/");
 }, '<a href="http://www.google.com" rel="nofollow" class="auto-embedded">[www.google.com]</a> <a href="http://www.google.com/" rel="nofollow" class="auto-embedded">[www.google.com]</a>');
 
+frseql("should convert a url containing a :, (, ) and +", function()
+{ return get_stripped_parser_result("http://google.com/blabla(boo)?a=b+c");
+}, '<a href="http://google.com/blabla(boo)?a=b+c" rel="nofollow" class="auto-embedded">[google.com]</a>');
+
 frseql("should embed an image", function()
 { return get_stripped_parser_result("http://i.imgur.com/H5H6f.png");
 }, '<img src="http://i.imgur.com/H5H6f.png" class="auto-embedded" />');
