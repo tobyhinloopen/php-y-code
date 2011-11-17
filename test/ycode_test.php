@@ -33,6 +33,10 @@ frseql("should enable bold words", function()
 { return get_stripped_parser_result("_bold!_");
 }, "<strong>bold!</strong>");
 
+frseql("should be able to cope with multiple bold words in a single line.", function()
+{ return get_stripped_parser_result("_bold_ and _bolder!_");
+}, "<strong>bold</strong> and <strong>bolder!</strong>");
+
 frseql("should enable color switching", function()
 { return parse_ycode_formatted_string_to_html("black ^1 red ^0 black");
 }, '<span class="color color0">black </span><span class="color color1"> red </span><span class="color color0"> black</span>');
