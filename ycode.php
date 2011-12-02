@@ -8,6 +8,8 @@ $GLOBALS["ycode_nested_string_scanner"] = new WillScanString();
 $URL_PATTERN = "((?:www\\.|https?:\\/\\/)[^\\/]+\\.[a-z0-9]+(\\/\\S*)?)";
 
 foreach(array(
+	"/\\!\\@\\#\\$\\%([\\S\\s]+?)\\^\\&\\*\\(\\)/" => function($_, $content)
+	{ return sprintf("<code style=\"white-space: pre;\">%s</code>", utf8_html_entities($content)); },
 	"/_(.+?)_/" => function($_, $content)
 	{ return sprintf("<strong>%s</strong>", utf8_html_entities($content)); },
 	"/(?<=\\A|\\r\\n|\\r|\\n)\\/\\/\\s*(.+)/" => function($_, $username)
