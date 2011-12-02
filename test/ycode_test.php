@@ -81,5 +81,8 @@ frseql("should be able to handle colors in a rauwkost", function()
 { return get_stripped_parser_result("black[rauw]^1red[/rauw]black");
 }, '<span class="color color0">black</span><div class="slideContainer"><a href="#" class="ShowHidden">[rauwkost]</a><div class="SlideText"><span class="color color1">red</span><span class="HideHiddenLink"><a href="#" class="HideHidden">[rauwkost]</a></span></div></div>black');
 
+frseql("should parse a pre-formatted block", function()
+{ return get_stripped_parser_result("!@#$%Appel\r\nTaart^&*()");
+}, "<code style=\"white-space: pre;\">Appel\r\nTaart</code>")
 
 ?>
